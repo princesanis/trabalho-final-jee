@@ -1,6 +1,7 @@
 package com.javaee.prince.trabalhofinaljee.domain;
 
 import java.math.BigDecimal;
+import java.util.Date;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -20,4 +21,6 @@ public class Acao {
 	private Long idEmpresa;
 	
 	private Long idPessoa;
+	
+	private Date dataCompra;
 }

@@ -14,71 +14,72 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.javaee.prince.trabalhofinaljee.domain.Empresa;
-import com.javaee.prince.trabalhofinaljee.services.EmpresaService;
+import com.javaee.prince.trabalhofinaljee.domain.Pessoa;
+import com.javaee.prince.trabalhofinaljee.services.PessoaService;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
-@Api("Empresa API")
+@Api("Pessoa API")
 @RestController
-@RequestMapping(EmpresaController.BASE_URL)
-public class EmpresaController {
+@RequestMapping(PessoaController.BASE_URL)
+public class PessoaController {
 	
-	public static final String BASE_URL = "/api/v1/empresas";
+	public static final String BASE_URL = "/api/v1/pessoas";
 	
-	private final EmpresaService empresaService;
+	private final PessoaService pessoaService;
 	
-    public EmpresaController(EmpresaService empresaService) 
+    public PessoaController(PessoaService pessoaService) 
     {
-        this.empresaService = empresaService;
+        this.pessoaService = pessoaService;
     }
     
-    @ApiOperation(value = "Visualizar lista de Empresas", notes="Esse endpoint irá retornar todas as empresas")
+    @ApiOperation(value = "Visualizar lista de Pessoas", notes="Esse endpoint irá retornar todas as pessoas")
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public List<Empresa> getAll()
+    public List<Pessoa> getAll()
     {
-        return empresaService.getAllEmpresas();
+        return pessoaService.getAllPessoas();
     }
 
     @ApiOperation(value = "Buscar empresa por id")
     @GetMapping({"/{id}"})
     @ResponseStatus(HttpStatus.OK)
-    public Empresa getById(@PathVariable Long id)
+    public Pessoa getById(@PathVariable Long id)
     {
-        return empresaService.getById(id);
+        return pessoaService.getById(id);
     }
     
-    @ApiOperation(value = "Criar uma nova empresa")
+    @ApiOperation(value = "Criar uma nova pessoa")
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Empresa create(@RequestBody Empresa empresa)
+    public Pessoa create(@RequestBody Pessoa pessoa)
     {
-        return empresaService.createNew(empresa);
+        return pessoaService.createNew(pessoa);
 	}
     
-    @ApiOperation(value = "Atualizar uma Empresa existente")
+    @ApiOperation(value = "Atualizar uma pessoa existente")
     @PutMapping({"/{id}"})
     @ResponseStatus(HttpStatus.OK)
-    public Empresa update(@PathVariable Long id, @RequestBody Empresa empresa)
+    public Pessoa update(@PathVariable Long id, @RequestBody Pessoa pessoa)
     {
-        return empresaService.save(id, empresa);
+        return pessoaService.save(id, pessoa);
     }
     
-    @ApiOperation(value = "Atualizar uma propriedade da Empresa")
+    @ApiOperation(value = "Atualizar uma propriedade da pessoa")
     @PatchMapping({"/{id}"})
     @ResponseStatus(HttpStatus.OK)
-    public Empresa patch(@PathVariable Long id, @RequestBody Empresa empresa)
+    public Pessoa patch(@PathVariable Long id, @RequestBody Pessoa pessoa)
     {
-        return empresaService.patch(id, empresa);
+        return pessoaService.patch(id, pessoa);
     }
     
-    @ApiOperation(value = "Excluir uma Empresa")
+    @ApiOperation(value = "Excluir uma pessoa")
     @DeleteMapping({"/{id}"})
     @ResponseStatus(HttpStatus.OK)
     public void delete(@PathVariable Long id)
     {
-    	empresaService.deleteById(id);
+    	pessoaService.deleteById(id);
     }    
+
 }
