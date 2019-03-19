@@ -1,20 +1,24 @@
 package com.javaee.prince.trabalhofinaljee.services;
 
-import java.util.List;
+import java.util.Set;
 
 import com.javaee.prince.trabalhofinaljee.domain.Empresa;
 
 public interface EmpresaService {
 	
-	Empresa getById(Long id);
+	Empresa getEmpresaById(String id);
 
-    List<Empresa> getAllEmpresas();
+    Set<Empresa> getAllEmpresas();
 
-    Empresa createNew(Empresa empresa);
+    Empresa createNewEmpresa(Empresa empresa);
+    
+    Empresa saveEmpresa(String id, Empresa empresa);
+    
+    void deleteEmpresaById(String id);
 
-    Empresa save(Long id, Empresa empresa);
+    //Empresa save(Long id, Empresa empresa);
 
-    Empresa patch(Long id, Empresa empresa);
+    //Empresa patch(Long id, Empresa empresa);
 
-    void deleteById(Long id);
+    //void deleteById(Long id);
 }

@@ -1,48 +1,90 @@
 package com.javaee.prince.trabalhofinaljee.services;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Optional;
+import java.util.Set;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.javaee.prince.trabalhofinaljee.domain.Empresa;
+import com.javaee.prince.trabalhofinaljee.repositories.EmpresaRepository;
+
 import com.javaee.prince.trabalhofinaljee.exceptions.ResourceNotFoundException;
 
 @Service
 public class EmpresaServiceImpl implements EmpresaService {
+
+	private EmpresaRepository empresaRepository;
 	
-	private List<Empresa> empresas = new ArrayList<>();
-	private Long actualId = 0L;
-
-	@Override
-	public Empresa getById(Long id) {
-		return this.empresas
-                .stream().filter(empresa -> empresa.getId().equals(id))
-                .findFirst()
-                .orElseThrow(ResourceNotFoundException::new);
-	}
-
-	@Override
-	public List<Empresa> getAllEmpresas() 
+	public EmpresaServiceImpl(EmpresaRepository empresaRepository) 
 	{
-        return this.empresas;
+		this.empresaRepository = empresaRepository;
 	}
-
+	
 	@Override
-	public Empresa createNew(Empresa empresa) 
+	public Set<Empresa> getAllEmpresas() 
 	{
-		return saveAndReturn(empresa);
-	}
-
-	@Override
-	public Empresa save(Long id, Empresa empresa) 
-	{
-		empresa.setId(id);
+		Set<Empresa> empresas = new HashSet<>();
 		
-        return saveAndReturn(empresa);
+		this.empresaRepository.findAll().iterator().forEachRemaining(empresas::add);
+		
+		return empresas;
+	}
+	
+	@Override
+	public Empresa getEmpresaById(String id) 
+	{
+		return getById(id);
+	}
+	
+	private Empresa getById(String id) 
+	{
+		Optional<Empresa> empresaOptional = empresaRepository.findById(id);
+
+        if (!empresaOptional.isPresent()) 
+        {
+            throw new IllegalArgumentException("Empresa não encontrada pelo valor do ID: " + id.toString() );
+        }
+        
+        return empresaOptional.get();
 	}
 
 	@Override
+	@Transactional(propagation=Propagation.REQUIRED)
+	public Empresa createNewEmpresa(Empresa empresa) 
+	{
+		if(empresaRepository.findByName(empresa.getNome()).isEmpty()) 
+		{			
+			return empresaRepository.save(empresa);
+		}
+		else 
+		{
+			throw new IllegalArgumentException("Já existe uma empresa com este nome cadastrada: " + empresa.getNome());
+		}
+	}
+	
+	@Override
+	@Transactional(propagation=Propagation.REQUIRED)
+	public Empresa saveEmpresa(String id, Empresa empresa) 
+	{
+
+		empresa.setId(id);
+	
+		Empresa empresaSaved = empresaRepository.save(empresa);
+		
+		return empresaSaved;
+	}
+	
+	@Override
+	@Transactional(propagation=Propagation.REQUIRED)
+	public void deleteEmpresaById(String id) 
+	{
+		empresaRepository.deleteById(id);
+	}	
+
+/*	@Override
 	public Empresa patch(Long id, Empresa empresa) 
 	{
 		Empresa savedEmpresa = getById(id);
@@ -53,15 +95,15 @@ public class EmpresaServiceImpl implements EmpresaService {
 		}
 		
 		return saveAndReturn(savedEmpresa);
-	}
+	}*/
 
-	@Override
+/*	@Override
 	public void deleteById(Long id) 
 	{
 		this.empresas.removeIf(empresa -> empresa.getId().equals(id));
-	}
+	}*/
 	
-	private Empresa saveAndReturn(Empresa empresa) 
+/*	private Empresa saveAndReturn(Empresa empresa) 
 	{
 		if(empresa.getId() != null) 
 		{
@@ -79,5 +121,5 @@ public class EmpresaServiceImpl implements EmpresaService {
 		}
         
         return empresa;
-    }	
+    } */
 }
