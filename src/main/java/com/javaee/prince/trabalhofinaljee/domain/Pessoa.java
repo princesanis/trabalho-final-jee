@@ -13,9 +13,9 @@ import lombok.Setter;
 public class Pessoa {
 
 	@Id
-	private Long id;
-	
-	private String nome;
-	
-	private String email;
+	private String id;
+	private int pessoaId;
+	private String pessoaNome;
+	private String pessoaEmail;
+	private String pessoaCpf;
 }

@@ -15,6 +15,6 @@ public class Empresa {
 
 	@Id
 	private String id;
-	
-	private String nome;
+	private int empresaId;
+	private String empresaNome;
 }

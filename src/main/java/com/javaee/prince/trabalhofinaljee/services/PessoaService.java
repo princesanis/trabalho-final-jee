@@ -6,15 +6,13 @@ import com.javaee.prince.trabalhofinaljee.domain.Pessoa;
 
 public interface PessoaService {
 	
-	Pessoa getById(Long id);
+	Pessoa getPessoaById(String id);
 
     List<Pessoa> getAllPessoas();
 
-    Pessoa createNew(Pessoa pessoa);
+    Pessoa createNewPessoa(Pessoa pessoa);
 
-    Pessoa save(Long id, Pessoa pessoa);
+    Pessoa updatePessoa(String id, Pessoa pessoa);
 
-    Pessoa patch(Long id, Pessoa pessoa);
-
-    void deleteById(Long id);
+    void deletePessoaById(String id);
 }

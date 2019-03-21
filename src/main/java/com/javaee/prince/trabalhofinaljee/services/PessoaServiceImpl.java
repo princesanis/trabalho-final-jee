@@ -2,83 +2,77 @@ package com.javaee.prince.trabalhofinaljee.services;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
+import com.javaee.prince.trabalhofinaljee.domain.Empresa;
 import com.javaee.prince.trabalhofinaljee.domain.Pessoa;
 import com.javaee.prince.trabalhofinaljee.exceptions.ResourceNotFoundException;
+import com.javaee.prince.trabalhofinaljee.repositories.PessoaRepository;
 
 @Service
 public class PessoaServiceImpl implements PessoaService {
 
-	private List<Pessoa> pessoas = new ArrayList<>();
-	private Long actualId = 0L;
+	private PessoaRepository pessoaRepository;
 	
-	@Override
-	public Pessoa getById(Long id) 
+	public PessoaServiceImpl(PessoaRepository pessoaRepository) 
 	{
-		return this.pessoas
-                .stream().filter(pessoa -> pessoa.getId().equals(id))
-                .findFirst()
-                .orElseThrow(ResourceNotFoundException::new);
-	}
-
+		this.pessoaRepository = pessoaRepository;
+	}	
+	
 	@Override
 	public List<Pessoa> getAllPessoas() 
 	{
-		return this.pessoas;
+		return this.pessoaRepository.findAll();
 	}
-
+	
 	@Override
-	public Pessoa createNew(Pessoa pessoa) 
+	public Pessoa getPessoaById(String id) 
 	{
-		return saveAndReturn(pessoa);		
+		Optional<Pessoa> pessoaOptional = pessoaRepository.findById(id);
+
+        if (!pessoaOptional.isPresent()) 
+        {
+            throw new IllegalArgumentException("Pessoa não encontrada pelo valor do ID: " + id.toString() );
+        }
+        
+        return pessoaOptional.get();
+		
+		//return this.pessoaRepository.findById(id).orElse(null);
 	}
 
 	@Override
-	public Pessoa save(Long id, Pessoa pessoa) 
+	@Transactional(propagation=Propagation.REQUIRED)
+	public Pessoa createNewPessoa(Pessoa pessoa) 
+	{
+		if(pessoaRepository.findByName(pessoa.getPessoaNome()).isEmpty()) 
+		{	
+			return pessoaRepository.save(pessoa);
+		}
+		else 
+		{
+			throw new IllegalArgumentException("Já existe uma empresa com este nome cadastrada: " + pessoa.getPessoaNome());
+		}		
+	}
+
+	@Override
+	@Transactional(propagation=Propagation.REQUIRED)
+	public Pessoa updatePessoa(String id, Pessoa pessoa) 
 	{
 		pessoa.setId(id);
 		
-        return saveAndReturn(pessoa);
+		Pessoa pessoaSaved = pessoaRepository.save(pessoa);
+		
+		return pessoaSaved;
 	}
 
 	@Override
-	public Pessoa patch(Long id, Pessoa pessoa) 
+	@Transactional(propagation=Propagation.REQUIRED)
+	public void deletePessoaById(String id) 
 	{
-		Pessoa savedPessoa = getById(id);
-		
-		if(pessoa.getNome() != null && !pessoa.getNome().isEmpty()) 
-		{
-			savedPessoa.setNome(pessoa.getNome());
-		}
-		
-		return saveAndReturn(savedPessoa);
-	}
-
-	@Override
-	public void deleteById(Long id) 
-	{
-		this.pessoas.removeIf(pessoa -> pessoa.getId().equals(id));
-	}
-	
-	private Pessoa saveAndReturn(Pessoa pessoa) 
-	{
-		if(pessoa.getId() != null) 
-		{
-			Pessoa savedPessoa = getById(pessoa.getId());
-			
-			this.pessoas.set(this.pessoas.indexOf(savedPessoa), pessoa);
-		} 
-		else 
-		{
-			actualId++;
-			
-			pessoa.setId(actualId);
-			
-			this.pessoas.add(pessoa);
-		}
-        
-        return pessoa;
+		pessoaRepository.deleteById(id);
 	}
 }

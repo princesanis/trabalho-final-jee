@@ -1,6 +1,5 @@
 package com.javaee.prince.trabalhofinaljee.domain;
 
-import java.math.BigDecimal;
 import java.util.Date;
 
 import org.springframework.data.annotation.Id;
@@ -16,17 +15,12 @@ import lombok.Setter;
 public class Acao {
 	
 	@Id
-	private Long id;
-	
-	private String nome;
-	
-	private BigDecimal valorInicial;
-	
-	private BigDecimal valorAtual;
-	
-	private Long idEmpresaProprietaria;
-	
-	private Long idPessoaProprietaria;
-	
-	private Date dataCompra;
+	private Long acaoId;
+	private String acaoNome;
+	private float valorInicial;
+	private float valorAtual;
+	private int idEmpresa;
+	private int idPessoaProprietaria;
+	private String dataInicial;
+	private String dataVendaAtual;
 }

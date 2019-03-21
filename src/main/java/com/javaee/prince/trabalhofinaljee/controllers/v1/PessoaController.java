@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -45,9 +44,9 @@ public class PessoaController {
     @ApiOperation(value = "Buscar empresa por id")
     @GetMapping({"/{id}"})
     @ResponseStatus(HttpStatus.OK)
-    public Pessoa getById(@PathVariable Long id)
+    public Pessoa getById(@PathVariable String id)
     {
-        return pessoaService.getById(id);
+        return pessoaService.getPessoaById(id);
     }
     
     @ApiOperation(value = "Criar uma nova pessoa")
@@ -55,31 +54,22 @@ public class PessoaController {
     @ResponseStatus(HttpStatus.CREATED)
     public Pessoa create(@RequestBody Pessoa pessoa)
     {
-        return pessoaService.createNew(pessoa);
+        return pessoaService.createNewPessoa(pessoa);
 	}
     
     @ApiOperation(value = "Atualizar uma pessoa existente")
     @PutMapping({"/{id}"})
     @ResponseStatus(HttpStatus.OK)
-    public Pessoa update(@PathVariable Long id, @RequestBody Pessoa pessoa)
+    public Pessoa update(@PathVariable String id, @RequestBody Pessoa pessoa)
     {
-        return pessoaService.save(id, pessoa);
-    }
-    
-    @ApiOperation(value = "Atualizar uma propriedade da pessoa")
-    @PatchMapping({"/{id}"})
-    @ResponseStatus(HttpStatus.OK)
-    public Pessoa patch(@PathVariable Long id, @RequestBody Pessoa pessoa)
-    {
-        return pessoaService.patch(id, pessoa);
+        return pessoaService.updatePessoa(id, pessoa);
     }
     
     @ApiOperation(value = "Excluir uma pessoa")
     @DeleteMapping({"/{id}"})
     @ResponseStatus(HttpStatus.OK)
-    public void delete(@PathVariable Long id)
+    public void delete(@PathVariable String id)
     {
-    	pessoaService.deleteById(id);
-    }    
-
+    	pessoaService.deletePessoaById(id);
+    }
 }
