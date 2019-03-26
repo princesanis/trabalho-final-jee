@@ -15,13 +15,12 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.javaee.prince.trabalhofinaljee.domain.Acao;
-import com.javaee.prince.trabalhofinaljee.domain.Pessoa;
 import com.javaee.prince.trabalhofinaljee.services.AcaoService;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
-@Api("Ação API")
+@Api("Api de consulta, compra e venda de Ações")
 @RestController
 @RequestMapping(AcaoController.BASE_URL)
 public class AcaoController {
@@ -38,33 +37,9 @@ public class AcaoController {
     @ApiOperation(value = "Buscar ação por id")
     @GetMapping({"/{id}"})
     @ResponseStatus(HttpStatus.OK)
-    public Acao getById(@PathVariable Long id)
+    public Acao getById(@PathVariable String id)
     {
-        return acaoService.getById(id);
-    }
-    
-    @ApiOperation(value = "Buscar todas as ações pelo id da pessoa")
-    @GetMapping({"/pessoa/{id}"})
-    @ResponseStatus(HttpStatus.OK)
-    public List<Acao> getAllAcoesByIdPessoa(@PathVariable Long id)
-    {
-        return acaoService.getAllAcoesByIdPessoa(id);
-    }
-    
-    @ApiOperation(value = "Buscar todas as ações pelo id da empresa")
-    @GetMapping({"/empresa/{id}"})
-    @ResponseStatus(HttpStatus.OK)
-    public List<Acao> getAllAcoesByIdEmpresa(@PathVariable Long id)
-    {
-        return acaoService.getAllAcoesByIdEmpresa(id);
-    }
-    
-    @ApiOperation(value = "Buscar todas as pessoas que possuem aquela ação pelo seu id")
-    @GetMapping({"/{id}/pessoas"})
-    @ResponseStatus(HttpStatus.OK)
-    public List<Pessoa> getAllPessoasByIdAcao(@PathVariable Long id)
-    {
-        return acaoService.getAllPessoasByIdAcao(id);
+        return acaoService.getAcaoById(id);
     }
     
     @ApiOperation(value = "Cadastrar uma nova ação")
@@ -72,30 +47,30 @@ public class AcaoController {
     @ResponseStatus(HttpStatus.CREATED)
     public Acao createAcao(@RequestBody Acao acao)
     {
-        return acaoService.createAcao(acao);
+        return acaoService.createNewAcao(acao);
 	}
     
-    @ApiOperation(value = "Atualizar uma ação existente")
+/*    @ApiOperation(value = "Atualizar uma ação existente")
     @PutMapping({"/{id}"})
     @ResponseStatus(HttpStatus.OK)
-    public Acao updateAcao(@PathVariable Long id, @RequestBody Acao acao)
+    public Acao updateAcao(@PathVariable String id, @RequestBody Acao acao)
     {
         return acaoService.save(id, acao);
-    }
+    }*/
     
     @ApiOperation(value = "Comprar uma Ação")
-    @PatchMapping({"/{id}/compra"})
+    @PatchMapping({"/{id}/compras"})
     @ResponseStatus(HttpStatus.OK)
-    public Acao comprarAcao(@PathVariable Long id, @RequestBody Acao acao)
+    public Acao comprarAcao(@PathVariable String idAcao, @RequestBody Acao acao)
     {
-        return acaoService.comprarAcao(id, acao);
+        return acaoService.comprarAcao(idAcao, acao);
     }
     
-    @ApiOperation(value = "Atualizar uma propriedade da Ação")
-    @PatchMapping({"/{id}/venda"})
+    @ApiOperation(value = "Vender uma Ação")
+    @PatchMapping({"/{id}/vendas"})
     @ResponseStatus(HttpStatus.OK)
-    public Acao venderAcao(@PathVariable Long id, @RequestBody Acao acao)
+    public Acao venderAcao(@PathVariable String idAcao, @RequestBody Acao acao)
     {
-        return acaoService.venderAcao(id, acao);
+        return acaoService.venderAcao(idAcao, acao);
     }
 }

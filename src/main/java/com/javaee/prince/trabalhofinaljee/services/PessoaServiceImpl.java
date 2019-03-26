@@ -8,15 +8,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.javaee.prince.trabalhofinaljee.domain.Empresa;
 import com.javaee.prince.trabalhofinaljee.domain.Pessoa;
-import com.javaee.prince.trabalhofinaljee.exceptions.ResourceNotFoundException;
 import com.javaee.prince.trabalhofinaljee.repositories.PessoaRepository;
 
 @Service
 public class PessoaServiceImpl implements PessoaService {
 
 	private PessoaRepository pessoaRepository;
+	
 	
 	public PessoaServiceImpl(PessoaRepository pessoaRepository) 
 	{
@@ -48,13 +47,13 @@ public class PessoaServiceImpl implements PessoaService {
 	@Transactional(propagation=Propagation.REQUIRED)
 	public Pessoa createNewPessoa(Pessoa pessoa) 
 	{
-		if(pessoaRepository.findByName(pessoa.getPessoaNome()).isEmpty()) 
+		if(pessoaRepository.findByName(pessoa.getName()).isEmpty()) 
 		{	
 			return pessoaRepository.save(pessoa);
 		}
 		else 
 		{
-			throw new IllegalArgumentException("Já existe uma empresa com este nome cadastrada: " + pessoa.getPessoaNome());
+			throw new IllegalArgumentException("Já existe uma empresa com este nome cadastrada: " + pessoa.getName());
 		}		
 	}
 

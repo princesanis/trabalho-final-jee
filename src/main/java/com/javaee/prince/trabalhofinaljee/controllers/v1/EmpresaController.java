@@ -19,7 +19,7 @@ import com.javaee.prince.trabalhofinaljee.services.EmpresaService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
-@Api("Empresa API")
+@Api("Api de cadastro, consulta, atualiação e exclusão de Empresas")
 @RestController
 @RequestMapping(EmpresaController.BASE_URL)
 public class EmpresaController {

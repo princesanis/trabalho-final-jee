@@ -51,15 +51,16 @@ public class EmailConfig {
 		return null;
 	}
 	
-	public void sendEmail(final String fromEmail,
-						  final String password,
-						  String toEmailComprador,
+	public void sendEmail(String toEmailComprador,
 						  String toEmailVendedor,
 						  String subject,
 						  String body)
 	{
 		try 
 		{
+			final String fromEmail = "arq.ssw@gmail.com";
+			final String password = "********";
+			
 			Authenticator auth = configAuth(fromEmail, password);
 			
 			Session session = Session.getInstance(getProperties(), auth);

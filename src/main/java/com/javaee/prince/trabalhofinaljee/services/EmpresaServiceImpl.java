@@ -12,8 +12,6 @@ import com.javaee.prince.trabalhofinaljee.repositories.EmpresaRepository;
 
 @Service
 public class EmpresaServiceImpl implements EmpresaService {
-
-	//private Long actualId = 0L;
 	
 	private EmpresaRepository empresaRepository;
 	
@@ -45,17 +43,13 @@ public class EmpresaServiceImpl implements EmpresaService {
 	@Transactional(propagation=Propagation.REQUIRED)
 	public Empresa createNewEmpresa(Empresa empresa) 
 	{
-		if(empresaRepository.findByName(empresa.getEmpresaNome()).isEmpty()) 
-		{	
-			//actualId++;
-			
-			//empresa.setEmpresaId(actualId);
-			
+		if(empresaRepository.findByName(empresa.getName()).isEmpty()) 
+		{				
 			return empresaRepository.save(empresa);
 		}
 		else 
 		{
-			throw new IllegalArgumentException("Já existe uma empresa com este nome cadastrada: " + empresa.getEmpresaNome());
+			throw new IllegalArgumentException("Já existe uma empresa com este nome cadastrada: " + empresa.getName());
 		}
 	}
 	
