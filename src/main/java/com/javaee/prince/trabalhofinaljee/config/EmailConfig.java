@@ -59,7 +59,7 @@ public class EmailConfig {
 		try 
 		{
 			final String fromEmail = "arq.ssw@gmail.com";
-			final String password = "********";
+			final String password = "Extreme@001#";
 			
 			Authenticator auth = configAuth(fromEmail, password);
 			

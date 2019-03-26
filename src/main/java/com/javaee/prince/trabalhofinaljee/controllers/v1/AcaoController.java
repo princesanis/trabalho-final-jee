@@ -15,7 +15,9 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.javaee.prince.trabalhofinaljee.domain.Acao;
+import com.javaee.prince.trabalhofinaljee.domain.Message;
 import com.javaee.prince.trabalhofinaljee.services.AcaoService;
+import com.javaee.prince.trabalhofinaljee.services.MessageService;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -29,9 +31,12 @@ public class AcaoController {
 	
 	private final AcaoService acaoService;
 	
-    public AcaoController(AcaoService acaoService) 
+	private final MessageService messageService;
+	
+    public AcaoController(AcaoService acaoService, MessageService messageService) 
     {
         this.acaoService = acaoService;
+        this.messageService = messageService;
     }
     
     @ApiOperation(value = "Buscar ação por id")
@@ -59,10 +64,19 @@ public class AcaoController {
     }*/
     
     @ApiOperation(value = "Comprar uma Ação")
+    //@PostMapping
     @PatchMapping({"/{id}/compras"})
-    @ResponseStatus(HttpStatus.OK)
+    //@ResponseStatus(HttpStatus.OK)
+    @ResponseStatus(HttpStatus.CREATED)
     public Acao comprarAcao(@PathVariable String idAcao, @RequestBody Acao acao)
+    //public String comprarAcao(@RequestBody Message message)
     {
+    	Message message = new Message();
+    	
+    	messageService.sendMessageCompra(message);
+    	
+    	//return "Mensagem enviada";
+    	
         return acaoService.comprarAcao(idAcao, acao);
     }
     
