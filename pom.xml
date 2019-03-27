@@ -66,25 +66,7 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
-<!-- 				    <configuration>
-        				<includes>
-            				<include>com/javaee/prince/trabalhofinaljee/domain/*.java</include>
-            				<include>com/javaee/prince/trabalhofinaljee/services/*.java</include>
-            				<include>com/javaee/prince/trabalhofinaljee/repositories/*.java</include> add this
-        				</includes>
-    				</configuration> -->
-			</plugin>
-<!-- 			<plugin>
-    			<groupId>org.apache.maven.plugins</groupId>
-    			<artifactId>maven-compiler-plugin</artifactId>
-    			<configuration>
-        			<includes>
-            			<include>com/javaee/prince/trabalhofinaljee/domain/*.java</include>
-            			<include>com/javaee/prince/trabalhofinaljee/services/*.java</include>
-            			<include>com/javaee/prince/trabalhofinaljee/repositories/*.java</include> add this
-        			</includes>
-    			</configuration>
-			</plugin> -->			
+			</plugin>		
 		</plugins>
 	</build>
 

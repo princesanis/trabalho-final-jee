@@ -1,6 +1,7 @@
 package com.javaee.prince.trabalhofinaljee.controllers.v1;
 
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -31,13 +32,18 @@ public class AcaoController {
 	
 	private final AcaoService acaoService;
 	
-	private final MessageService messageService;
-	
-    public AcaoController(AcaoService acaoService, MessageService messageService) 
-    {
+    public AcaoController(AcaoService acaoService) {
+    	
         this.acaoService = acaoService;
-        this.messageService = messageService;
+        
     }
+    
+	@GetMapping
+	@ResponseStatus(HttpStatus.OK)
+	public Set<Acao> getAll() 
+	{
+		return acaoService.getAll();
+	}
     
     @ApiOperation(value = "Buscar ação por id")
     @GetMapping({"/{id}"})
@@ -55,36 +61,20 @@ public class AcaoController {
         return acaoService.createNewAcao(acao);
 	}
     
-/*    @ApiOperation(value = "Atualizar uma ação existente")
-    @PutMapping({"/{id}"})
-    @ResponseStatus(HttpStatus.OK)
-    public Acao updateAcao(@PathVariable String id, @RequestBody Acao acao)
-    {
-        return acaoService.save(id, acao);
-    }*/
-    
     @ApiOperation(value = "Comprar uma Ação")
-    //@PostMapping
-    @PatchMapping({"/{id}/compras"})
-    //@ResponseStatus(HttpStatus.OK)
-    @ResponseStatus(HttpStatus.CREATED)
-    public Acao comprarAcao(@PathVariable String idAcao, @RequestBody Acao acao)
+    @PostMapping({"/compra"})
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public void comprarAcao(@RequestBody Acao acao)
     //public String comprarAcao(@RequestBody Message message)
     {
-    	Message message = new Message();
-    	
-    	messageService.sendMessageCompra(message);
-    	
-    	//return "Mensagem enviada";
-    	
-        return acaoService.comprarAcao(idAcao, acao);
+        acaoService.comprarAcao(acao);
     }
     
     @ApiOperation(value = "Vender uma Ação")
-    @PatchMapping({"/{id}/vendas"})
-    @ResponseStatus(HttpStatus.OK)
-    public Acao venderAcao(@PathVariable String idAcao, @RequestBody Acao acao)
+    @PostMapping({"/venda"})
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public void venderAcao(@RequestBody Acao acao)
     {
-        return acaoService.venderAcao(idAcao, acao);
+        acaoService.venderAcao(acao);
     }
 }

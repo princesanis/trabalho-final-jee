@@ -6,25 +6,42 @@ import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Component;
 
 import com.javaee.prince.trabalhofinaljee.config.RabbitMQConfig;
+import com.javaee.prince.trabalhofinaljee.domain.Acao;
 import com.javaee.prince.trabalhofinaljee.domain.Message;
+import com.javaee.prince.trabalhofinaljee.services.AcaoService;
 
 @Component
 public class MessageListener {
 
 	static final Logger logger = LoggerFactory.getLogger(MessageListener.class);
-
-    @RabbitListener(queues = RabbitMQConfig.QUEUE_DEAD_MESSAGES_COMPRAS)
-    //public void processMessage(Message message) {
-    public void processMessageCompras(Message message) {    	
-        logger.info("Mensagem recebida");
-        logger.info("Subject:" + message.getSubject());
-        logger.info("Body:" + message.getBody());
+	
+	private AcaoService acaoService;
+	
+	public MessageListener(AcaoService acaoService)
+	{
+		this.acaoService = acaoService;
+	}
+	
+    @RabbitListener(queues = RabbitMQConfig.QUEUE_MESSAGES_COMPRAS)
+    //public void processMessageCompras(Message message)
+    public void processMessageCompras(Acao acao)
+    {    	
+    	acaoService.executarSolicitacaoDeCompraDeAcao(acao);
+    	
+        logger.info("Mensagem de compra recebida");
+        logger.info(acao.getIdEmpresa().toString());
+        logger.info(acao.getIdPessoaProprietaria().toString());
+        logger.info(acao.getValorAtual().toString());
     }
     
-    @RabbitListener(queues = RabbitMQConfig.QUEUE_DEAD_MESSAGES_VENDAS)
-    public void processMessageVendas(Message message) {
-        logger.info("Mensagem recebida");
-        logger.info("Subject:" + message.getSubject());
-        logger.info("Body:" + message.getBody());
+    @RabbitListener(queues = RabbitMQConfig.QUEUE_MESSAGES_VENDAS)
+    public void processMessageVendas(Acao acao) 
+    {
+		acaoService.executarSolicitacaoDeVendaDeAcao(acao);
+		
+		logger.info("Mensagem de venda recebida");	
+        logger.info(acao.getIdEmpresa().toString());
+        logger.info(acao.getIdPessoaProprietaria().toString());
+        logger.info(acao.getValorAtual().toString());  	
     }    
 }

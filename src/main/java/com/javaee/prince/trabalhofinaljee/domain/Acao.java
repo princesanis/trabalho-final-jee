@@ -5,6 +5,7 @@ import java.util.Date;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -16,31 +17,19 @@ public class Acao {
 	@Id
 	private String id;
 	private String name;
-	private float valorInicial;
-	private float valorAtual;
-	private int idEmpresa;
-	private int idPessoaProprietaria;
-	private String dataInicial;
-	private String dataVendaAtual;
-	
-	public Acao(String id, 
-				String name, 
-				float valorInicial, 
-				float valorAtual, 
-				int idEmpresa, 
-				int idPessoaProprietaria, 
-				String dataInicial, 
-				String dataVendaAtual) 
-	{
-		this.id = id;
-		this.name = name;
-		this.valorInicial = valorInicial;
-		this.valorAtual = valorAtual;
-		this.idEmpresa = idEmpresa;
-		this.idPessoaProprietaria = idPessoaProprietaria;
-		this.dataInicial = dataInicial;
-		this.dataVendaAtual = dataVendaAtual;
-	}
+	private Double valorInicial;
+	private Double valorAtual;
+	private String idEmpresa;
+	private String idPessoaProprietaria;
+	private Date dataOperacao;
+	private Boolean disponivel;
 	
 	public Acao () {}
+	
+	@Override
+    public String toString() 
+	{
+        return String.format("Acao[idPessoaProprietaria=%s, valorInicial='%s', valorAtual='%s']"
+        		, idPessoaProprietaria, valorInicial, valorAtual);	
+    }
 }

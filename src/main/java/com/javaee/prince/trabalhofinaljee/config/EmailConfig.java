@@ -87,14 +87,12 @@ public class EmailConfig {
 		{
 			Address[] toUsers = InternetAddress.parse(toEmailComprador + ", " + toEmailVendedor);
 			
-			message.setFrom(new InternetAddress("example@gmail.com", "Mercado de Ações em JEE"));
-			//message.setReplyTo(InternetAddress.parse("example@gmail.com", false));
+			message.setFrom(new InternetAddress("arq.ssw@gmail.com", "Mercado de Ações em JEE"));
+			message.setReplyTo(InternetAddress.parse("arq.ssw@gmail.com", false));
 			message.setSubject(subject, "UTF-8");
 			message.setText(body, "UTF-8");
 			message.setSentDate(new Date());
 			message.setRecipients(Message.RecipientType.TO, toUsers);
-			//message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(toEmail, false));
-			
 		} 
 		catch (Exception e) 
 		{

@@ -1,6 +1,5 @@
 package com.javaee.prince.trabalhofinaljee.bootstrap;
 
-import java.text.DateFormat;
 import java.util.Date;
 
 import org.springframework.context.ApplicationListener;
@@ -55,34 +54,31 @@ public class ApplicationBootstrap implements ApplicationListener<ContextRefreshe
 	
 	private void loadAcoes() 
 	{
-		Date dataAtual = new Date();
-		String dataInicial = java.text.DateFormat.getDateInstance(DateFormat.MEDIUM).format(dataAtual);
-		
         Acao acaoCemig = new Acao();
         acaoCemig.setName("CMIG4");
-        acaoCemig.setValorInicial(14.43f);
-        acaoCemig.setValorAtual(0);
-        acaoCemig.setIdEmpresa(1);
-        acaoCemig.setDataInicial(dataInicial);
-        acaoCemig.setDataVendaAtual("");
+        acaoCemig.setValorInicial(14.43);
+        acaoCemig.setValorAtual(14.43);
+        acaoCemig.setIdEmpresa("1");
+        acaoCemig.setDataOperacao(new Date());
+        acaoCemig.setDisponivel(true);
         acaoRepository.save(acaoCemig);
         
         Acao acaoMagazineLuiza = new Acao();
         acaoMagazineLuiza.setName("MGLU3");
-        acaoMagazineLuiza.setValorInicial(181.63f);
-        acaoMagazineLuiza.setValorAtual(0);
-        acaoMagazineLuiza.setIdEmpresa(2);
-        acaoMagazineLuiza.setDataInicial(dataInicial);
-        acaoMagazineLuiza.setDataVendaAtual("");
+        acaoMagazineLuiza.setValorInicial(181.63);
+        acaoMagazineLuiza.setValorAtual(181.63);
+        acaoMagazineLuiza.setIdEmpresa("2");
+        acaoMagazineLuiza.setDataOperacao(new Date());
+        acaoCemig.setDisponivel(true);
         acaoRepository.save(acaoMagazineLuiza);
 
         Acao acaoOracle = new Acao();
         acaoOracle.setName("ORCL34");
-        acaoOracle.setValorInicial(204.73f);
-        acaoOracle.setValorAtual(0);
-        acaoOracle.setIdEmpresa(3);
-        acaoOracle.setDataInicial(dataInicial);
-        acaoOracle.setDataVendaAtual("");
+        acaoOracle.setValorInicial(204.73);
+        acaoOracle.setValorAtual(204.73);
+        acaoOracle.setIdEmpresa("3");
+        acaoOracle.setDataOperacao(new Date());
+        acaoCemig.setDisponivel(true);
         acaoRepository.save(acaoOracle);
 	}
 	
