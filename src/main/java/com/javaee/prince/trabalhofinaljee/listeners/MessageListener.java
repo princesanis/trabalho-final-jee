@@ -23,7 +23,6 @@ public class MessageListener {
 	}
 	
     @RabbitListener(queues = RabbitMQConfig.QUEUE_MESSAGES_COMPRAS)
-    //public void processMessageCompras(Message message)
     public void processMessageCompras(Acao acao)
     {    	
     	acaoService.executarSolicitacaoDeCompraDeAcao(acao);
