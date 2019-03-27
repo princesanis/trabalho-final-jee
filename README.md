@@ -44,6 +44,8 @@ O projeto foi desenvolvido com as seguintes tecnologias listadas abaixo e sus re
 * Você irá precisar de uma IDE do Java com o SDK 8 (1.8). 
 É possível também rodar o projeto com o Visual Studio Code (Windows, Linux ou MacOS)
 
+* Será necessário instalar o [Docker] localmente para a execução das imagens na sequência abaixo.
+
 * Para iniciar a imagem docker do MongoDB basta utilizar o seguinte comando: 
 
 ```sh
@@ -64,3 +66,5 @@ http://localhost:8080/swagger-ui.html
 
 * Para acessar o console de administrador do RabbitMQ, é preciso acessar o seguinte link `http://localhost:15672` informando o ***usuário*** e ***senha***, ***guest*** e ***guest*** respectivamente. 
 Neste console, podemos acessar as abas de Exchanges e Queues para visualizar nossos exchanges e queues criados.
+
+[Docker]: <https://www.docker.com/get-started>
